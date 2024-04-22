@@ -1,16 +1,14 @@
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import { registerUser } from "./api/AuthService";
-
+import { registerUser } from "./api";
 const RegisterSchema = Yup.object().shape({
-  /*
   email: Yup.string()
     .email("Invalid email address format")
     .required("Email is required"),
   password: Yup.string()
     .min(3, "Password must be 3 characters at minimum")
-    .required("Password is required"),*/
+    .required("Password is required"),
 });
 
 export const RegisterUser = () => {
