@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Languages from "./Languages";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LanguageDetail from "./LanguageDetail";
+import { LoginUser } from "./Login";
 import { RegisterUser } from "./Register";
 import { getLanguages, getQuizzes } from "./api";
 import { setToken } from "./sessionManager";
@@ -9,6 +10,10 @@ import { setToken } from "./sessionManager";
 const router = createBrowserRouter([
   {
     path: "/",
+    element: <LoginUser />,
+  },
+  {
+    path: "/register",
     element: <RegisterUser />,
   },
   {
