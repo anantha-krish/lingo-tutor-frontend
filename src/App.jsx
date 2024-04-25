@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Languages from "./Languages";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import LanguageDetail from "./LanguageDetail";
@@ -29,7 +29,7 @@ function App() {
     getLanguages();
     getQuizzes();
   }, []);
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
 
   return (
     <>
