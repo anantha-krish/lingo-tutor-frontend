@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
-import logo from "./images/logo.jpeg";
+import logo from "./assets/images/logo_transparent.png";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object().shape({
