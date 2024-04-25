@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik } from "formik";
 import logo from "./images/logo.jpeg";
@@ -16,6 +16,9 @@ const validationSchema = Yup.object().shape({
 });
 
 export const LoginUser = () => {
+  useEffect(() => {
+    sessionStorage.clear();
+  });
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();

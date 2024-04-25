@@ -1,5 +1,4 @@
 import http from "../http";
-import "./authIntercept";
 import toast from "react-hot-toast";
 
 export async function getLanguages() {

@@ -5,7 +5,7 @@ import LanguageDetail from "./LanguageDetail";
 import { LoginUser } from "./Login";
 import { RegisterUser } from "./Register";
 import { getLanguages, getQuizzes } from "./api";
-import { setToken } from "./sessionManager";
+import { Toaster } from "react-hot-toast";
 
 const router = createBrowserRouter([
   {
@@ -28,9 +28,9 @@ const router = createBrowserRouter([
 
 function App() {
   useEffect(() => {
-    setToken(
+    /*  setToken(
       "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJwYXZpIiwiaWF0IjoxNzEzNzU1NzMwLCJleHAiOjE3MTM3NTc1MzB9.2Dbfh8CSIM8hGOx08P5TaY26samoeTErAT5Lm26K5AQ"
-    );
+    );*/
     getLanguages();
     getQuizzes();
   }, []);
@@ -39,6 +39,7 @@ function App() {
   return (
     <>
       <RouterProvider router={router} />
+      <Toaster />
     </>
   );
 }
