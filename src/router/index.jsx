@@ -1,8 +1,7 @@
 import Languages from "../Languages";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import LanguageDetail from "../LanguageDetail";
 import { LoginUser } from "../Login";
-import { RegisterPage, PageNotFound } from "../pages";
+import { RegisterPage, PageNotFound, LanguageDetail } from "../pages";
 import { AuthRoute } from "./AuthRoute";
 
 export const Router = createBrowserRouter([
