@@ -5,3 +5,8 @@
 
 // Import all of Bootstrap's CSS
 @import "bootstrap/scss/bootstrap";
+
+.field_error {
+  display: block;
+  min-height: 24px;
+}

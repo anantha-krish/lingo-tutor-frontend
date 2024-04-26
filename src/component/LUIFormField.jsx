@@ -1,4 +1,5 @@
-import { Field, ErrorMessage } from "formik";
+import { Field } from "formik";
+import { FormLabel } from "react-bootstrap";
 
 export const LUIFormField = ({
   type,
@@ -10,17 +11,19 @@ export const LUIFormField = ({
   values,
 }) => (
   <div className="form-group">
-    {label && <label htmlFor={name}>{label}</label>}
+    {label && <FormLabel htmlFor={name}>{label}</FormLabel>}
     <Field
       type={type ?? "text"}
       value={values[name]}
       name={name ?? ""}
       placeholder={placeholder ?? ""}
       autoComplete="off"
-      className={`mt-2 form-control ${
+      className={`form-control ${
         touched[name] && errors[name] ? "is-invalid" : ""
       }`}
     />
-    <ErrorMessage component="div" name={name} className="invalid-feedback" />
+    <div className="invalid-feedback field_error">
+      {touched[name] && errors[name]}
+    </div>
   </div>
 );
