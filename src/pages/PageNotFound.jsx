@@ -20,10 +20,7 @@ export const PageNotFound = () => {
               <p className="mb-5">
                 Lingo Tutor did not find your requested page.
               </p>
-              <Button
-                variant="outline-secondary"
-                onClick={() => navigate("/languages")}
-              >
+              <Button variant="outline-secondary" onClick={() => navigate("/")}>
                 Back to home
               </Button>
             </div>

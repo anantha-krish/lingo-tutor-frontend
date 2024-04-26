@@ -34,7 +34,7 @@ http.interceptors.response.use(
     toast.error(error.response.status + ":" + error.response.data.message);
     if (error.response.status == 401) {
       sessionStorage.clear();
-      window.location.href = "/";
+      //window.location.href = "/";
     }
     return Promise.reject(error);
   }

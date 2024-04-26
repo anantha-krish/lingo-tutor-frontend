@@ -44,7 +44,10 @@ export const RegisterPage = () => {
     <Container fluid className="bg-body-tertiary">
       <Row className="h-100">
         <Col className="mt-4">
-          <Button variant="outline-secondary" onClick={() => navigate("/")}>
+          <Button
+            variant="outline-secondary"
+            onClick={() => navigate("/login")}
+          >
             Back to Login
           </Button>
         </Col>
