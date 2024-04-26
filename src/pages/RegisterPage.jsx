@@ -74,6 +74,7 @@ export const RegisterPage = () => {
                       <LUIFormField
                         name="firstName"
                         label="First Name"
+                        placeholder="Enter your first name"
                         {...props}
                       />
                     </Col>
@@ -81,6 +82,7 @@ export const RegisterPage = () => {
                       <LUIFormField
                         name="lastName"
                         label="Last Name"
+                        placeholder="Enter your last name"
                         {...props}
                       />
                     </Col>
@@ -90,6 +92,7 @@ export const RegisterPage = () => {
                       <LUIFormField
                         name="username"
                         label="User Name"
+                        placeholder="Please provide a unique username"
                         {...props}
                       />
                     </Col>
@@ -99,7 +102,7 @@ export const RegisterPage = () => {
                       <LUIFormField
                         name="email"
                         label="Email"
-                        placeholder="Enter email"
+                        placeholder="Enter your email"
                         {...props}
                       />
                     </Col>
@@ -121,7 +124,7 @@ export const RegisterPage = () => {
                         type="password"
                         name="passwordConfirm"
                         label="Confirm Password"
-                        placeholder="Confirm Password"
+                        placeholder="Please retype your Password"
                         {...props}
                       />
                     </Col>
