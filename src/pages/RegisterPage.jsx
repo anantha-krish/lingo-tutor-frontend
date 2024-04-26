@@ -1,10 +1,11 @@
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { registerUser } from "../api";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import { LUIFormField } from "../component";
+import LandscapeLogo from "../assets/images/logo_landscape_transparent.png";
 
 const RegisterSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -40,10 +41,14 @@ export const RegisterPage = () => {
   };
 
   return (
-    <Container fluid className="h-100">
-      <Row className="h-100 align-items-center">
-        <Col />
-        <Col lg={8} md={10} xs={12}>
+    <Container fluid className="bg-body-tertiary">
+      <Row className="h-100">
+        <Col className="mt-4">
+          <Button variant="outline-secondary" onClick={() => navigate("/")}>
+            Back to Login
+          </Button>
+        </Col>
+        <Col lg={6} md={10} xs={12} className="align-items-center">
           <Formik
             initialValues={{
               firstName: "",
@@ -58,7 +63,12 @@ export const RegisterPage = () => {
           >
             {(props) => (
               <Form>
-                <Container>
+                <Row>
+                  <Row>
+                    <Col>
+                      <Image src={LandscapeLogo} height={150} />
+                    </Col>
+                  </Row>
                   <Row>
                     <Col>
                       <LUIFormField
@@ -75,35 +85,73 @@ export const RegisterPage = () => {
                       />
                     </Col>
                   </Row>
-                  <LUIFormField name="username" label="User Name" {...props} />
-                  <LUIFormField
-                    name="email"
-                    label="Email"
-                    placeholder="Enter email"
-                    {...props}
-                  />
-                  <LUIFormField
-                    type="password"
-                    name="password"
-                    label="Password"
-                    placeholder="Enter your Password"
-                    {...props}
-                  />
-                  <LUIFormField
-                    type="password"
-                    name="passwordConfirm"
-                    label="Confirm Password"
-                    placeholder="Confirm Password"
-                    {...props}
-                  />
-                  <button
-                    type="submit"
-                    className="btn btn-primary btn-block mt-4"
-                    disabled={props.isSubmitting}
-                  >
-                    {props.isSubmitting ? "Submitting..." : "Submit"}
-                  </button>
-                </Container>
+                  <Row>
+                    <Col>
+                      <LUIFormField
+                        name="username"
+                        label="User Name"
+                        {...props}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <LUIFormField
+                        name="email"
+                        label="Email"
+                        placeholder="Enter email"
+                        {...props}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <LUIFormField
+                        type="password"
+                        name="password"
+                        label="Password"
+                        placeholder="Enter your Password"
+                        {...props}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <LUIFormField
+                        type="password"
+                        name="passwordConfirm"
+                        label="Confirm Password"
+                        placeholder="Confirm Password"
+                        {...props}
+                      />
+                    </Col>
+                  </Row>
+
+                  <Container fluid>
+                    <Row className="mt-4 mb-4">
+                      <Col>
+                        <Button
+                          className=" w-100"
+                          type="reset"
+                          variant="secondary"
+                          disabled={props.isSubmitting}
+                        >
+                          Cancel
+                        </Button>
+                      </Col>
+
+                      <Col>
+                        <Button
+                          className=" w-100"
+                          type="submit"
+                          disabled={props.isSubmitting}
+                        >
+                          {props.isSubmitting ? "Registering..." : "Register"}
+                        </Button>
+                      </Col>
+                    </Row>
+                  </Container>
+                </Row>
               </Form>
             )}
           </Formik>
