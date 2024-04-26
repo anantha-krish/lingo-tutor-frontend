@@ -20,7 +20,7 @@ http.interceptors.request.use(
   },
   function (error) {
     // Do something with request error
-    toast.error(error.message, { icon: "❌" });
+    toast.error(error.request.status + ":" + error.request.data.message);
     return Promise.reject(error);
   }
 );
@@ -31,7 +31,11 @@ http.interceptors.response.use(
     return response;
   },
   function (error) {
-    toast.error(error.message, { icon: "❌" });
+    toast.error(error.response.status + ":" + error.response.data.message);
+    if (error.response.status == 401) {
+      sessionStorage.clear();
+      window.location.href = "/";
+    }
     return Promise.reject(error);
   }
 );
