@@ -2,7 +2,7 @@ import Languages from "./Languages";
 import { createBrowserRouter } from "react-router-dom";
 import LanguageDetail from "./LanguageDetail";
 import { LoginUser } from "./Login";
-import { RegisterPage } from "./pages";
+import { RegisterPage, PageNotFound } from "./pages";
 
 export const Router = createBrowserRouter([
   {
@@ -23,7 +23,6 @@ export const Router = createBrowserRouter([
   },
   {
     path: "*",
-    // design a page not found
-    element: <>Page Not Found</>,
+    element: <PageNotFound />,
   },
 ]);
