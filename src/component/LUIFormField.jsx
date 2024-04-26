@@ -1,4 +1,5 @@
 import { Field } from "formik";
+import { useId } from "react";
 import { FormLabel } from "react-bootstrap";
 
 export const LUIFormField = ({
@@ -10,29 +11,30 @@ export const LUIFormField = ({
   placeholder,
   values,
   enableValidFeedback = true,
-}) => (
-  <div className="form-group">
-    {label && (
-      <FormLabel htmlFor={name} className="text-body-secondary">
-        <strong>{label}</strong>
-      </FormLabel>
-    )}
-    <Field
-      type={type ?? "text"}
-      value={values[name]}
-      name={name ?? ""}
-      placeholder={placeholder ?? ""}
-      autoComplete="off"
-      className={`form-control ${
-        touched[name] && errors[name]
-          ? "is-invalid"
-          : touched[name] && enableValidFeedback
-          ? "is-valid"
-          : ""
-      }`}
-    />
-    <div className="invalid-feedback field_error">
-      {touched[name] && errors[name]}
+}) => {
+  const inputId = useId();
+  const validClass = touched[name] && enableValidFeedback ? "is-valid" : "";
+  return (
+    <div className="form-group">
+      {label && (
+        <FormLabel htmlFor={inputId} className="text-body-secondary">
+          <strong>{label}</strong>
+        </FormLabel>
+      )}
+      <Field
+        type={type ?? "text"}
+        value={values[name]}
+        id={inputId}
+        name={name ?? ""}
+        placeholder={placeholder ?? ""}
+        autoComplete="off"
+        className={`form-control ${
+          touched[name] && errors[name] ? "is-invalid" : validClass
+        }`}
+      />
+      <div className="invalid-feedback field_error">
+        {touched[name] && errors[name]}
+      </div>
     </div>
-  </div>
-);
+  );
+};
