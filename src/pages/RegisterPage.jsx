@@ -4,7 +4,7 @@ import { registerUser } from "../api";
 import { Row, Col, Container, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import { LUIFormField } from "../component";
+import { LUIFormField } from "../components";
 import LandscapeLogo from "../assets/images/logo_landscape_transparent.png";
 
 const RegisterSchema = Yup.object().shape({
@@ -65,7 +65,7 @@ export const RegisterPage = () => {
             onSubmit={handleUserRegisteration}
           >
             {(props) => (
-              <Form>
+              <Form onSubmit={props.handleSubmit}>
                 <Row>
                   <Row>
                     <Col>

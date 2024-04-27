@@ -1,8 +1,14 @@
 import Languages from "../Languages";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import { LoginUser } from "../Login";
-import { RegisterPage, PageNotFound, LanguageDetail } from "../pages";
+import {
+  RegisterPage,
+  PageNotFound,
+  LanguageDetail,
+  DashboardPage,
+} from "../pages";
 import { AuthRoute } from "./AuthRoute";
+//import { EditProfileComponent } from "../pages/EditProfile";
 
 export const Router = createBrowserRouter([
   {
@@ -21,6 +27,11 @@ export const Router = createBrowserRouter([
       {
         path: "/languages/:id",
         element: <LanguageDetail />,
+      },
+      {
+        path: "/dashboard",
+        // considering languages will be homepage
+        element: <DashboardPage />,
       },
     ],
   },
