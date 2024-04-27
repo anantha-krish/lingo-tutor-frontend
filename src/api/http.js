@@ -36,6 +36,9 @@ http.interceptors.response.use(
     toast.error(error.response.status + ":" + message);
     if (error.response.status == 401) {
       sessionStorage.clear();
+      /*if (window.location.pathname != "/login") {
+        window.location.reload();
+      }*/
     }
     return Promise.reject(error);
   }

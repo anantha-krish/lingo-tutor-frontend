@@ -29,7 +29,7 @@ export const LoginPage = () => {
     try {
       var res = await loginUser(values);
       if (res.status == 200) {
-        toast.success(`User: ${res.data.username} logged in successfully`);
+        toast.success(`User: ${values.username} logged in successfully`);
         setToken(res.data);
         setUsername(values.username);
         navigate("/");
