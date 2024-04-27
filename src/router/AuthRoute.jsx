@@ -3,7 +3,6 @@ import { isAuthenticated } from "../sessionManager";
 import { Col, Row } from "react-bootstrap";
 import { useAxiosLoader } from "../components/useAxiosLoader";
 import { BarLoader } from "react-spinners";
-import { auto } from "@popperjs/core";
 export const AuthRoute = () => {
   const [loading] = useAxiosLoader();
   return isAuthenticated() ? (
@@ -34,9 +33,18 @@ export const AuthRoute = () => {
             page Not found (Dev only)
           </Link>
         </Col>
+        <Col>
+          <Link className="text-white" to="/logout">
+            Logout (Dev only)
+          </Link>
+        </Col>
       </Row>
       <Row style={{ minHeight: 10 }}>
-        {loading ? <BarLoader color="#36d7b7" width={auto} height={10} /> : " "}
+        {loading ? (
+          <BarLoader color="#36d7b7" style={{ width: "100%" }} height={10} />
+        ) : (
+          " "
+        )}
       </Row>
       <Outlet />
     </>

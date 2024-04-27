@@ -6,6 +6,7 @@ import {
   LanguageDetail,
   DashboardPage,
   LoginPage,
+  LogoutPage,
 } from "../pages";
 import { AuthRoute } from "./AuthRoute";
 //import { EditProfileComponent } from "../pages/EditProfile";
@@ -42,6 +43,10 @@ export const Router = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/logout",
+    element: <LogoutPage />,
   },
   {
     path: "*",

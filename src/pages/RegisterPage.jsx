@@ -34,7 +34,7 @@ export const RegisterPage = () => {
       var res = await registerUser(values);
       if (res.status == 201) {
         navigate("/");
-        toast.success(`User: ${res.data.username} registered successfully`);
+        toast.success(`User: ${res.data.userName} registered successfully`);
       }
       // eslint-disable-next-line no-empty
     } catch (error) {}
