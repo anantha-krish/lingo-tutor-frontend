@@ -31,10 +31,11 @@ http.interceptors.response.use(
     return response;
   },
   function (error) {
-    toast.error(error.response.status + ":" + error.response.data.message);
+    var message =
+      error.response.data.error ?? error.response.data.message ?? "";
+    toast.error(error.response.status + ":" + message);
     if (error.response.status == 401) {
       sessionStorage.clear();
-      //window.location.href = "/";
     }
     return Promise.reject(error);
   }

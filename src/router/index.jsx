@@ -1,11 +1,11 @@
 import Languages from "../Languages";
 import { createBrowserRouter, Navigate } from "react-router-dom";
-import { LoginUser } from "../Login";
 import {
   RegisterPage,
   PageNotFound,
   LanguageDetail,
   DashboardPage,
+  LoginPage,
 } from "../pages";
 import { AuthRoute } from "./AuthRoute";
 //import { EditProfileComponent } from "../pages/EditProfile";
@@ -37,7 +37,7 @@ export const Router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginUser />,
+    element: <LoginPage />,
   },
   {
     path: "/register",
