@@ -1,7 +1,7 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { isAuthenticated } from "../sessionManager";
 import { Col, Row } from "react-bootstrap";
-import { useAxiosLoader } from "../components/useAxiosLoader";
+import { useAxiosLoader } from "../api";
 import { BarLoader } from "react-spinners";
 export const AuthRoute = () => {
   const [loading] = useAxiosLoader();

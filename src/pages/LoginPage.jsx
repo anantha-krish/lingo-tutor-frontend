@@ -8,6 +8,7 @@ import { LUIFormField } from "../components";
 import LandscapeLogo from "../assets/images/logo_portrait_transparent.png";
 import { setToken, setUsername } from "../sessionManager";
 import { auto } from "@popperjs/core";
+import { useEffect } from "react";
 
 const LoginSchema = Yup.object().shape({
   username: Yup.string()
@@ -23,6 +24,9 @@ const LoginSchema = Yup.object().shape({
 });
 
 export const LoginPage = () => {
+  useEffect(() => {
+    sessionStorage.clear();
+  }, []);
   var navigate = useNavigate();
 
   const handleLogin = async (values) => {
