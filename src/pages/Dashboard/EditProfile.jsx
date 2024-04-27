@@ -27,17 +27,16 @@ export const EditProfileComponent = () => {
   const setUserDetails = ({ firstName, lastName, email }) =>
     setUser({ firstName, lastName, email });
 
-  const initUserProfile = async () => {
-    try {
-      var res = await getUserProfile();
-      if (res.status == 200) {
-        setUserDetails(res.data);
-      }
-      // eslint-disable-next-line no-empty
-    } catch (error) {}
-  };
-
   useEffect(() => {
+    const initUserProfile = async () => {
+      try {
+        var res = await getUserProfile();
+        if (res.status == 200) {
+          setUserDetails(res.data);
+        }
+        // eslint-disable-next-line no-empty
+      } catch (error) {}
+    };
     initUserProfile();
   }, [isReadMode]);
 
@@ -90,71 +89,67 @@ export const EditProfileComponent = () => {
   };
 
   return (
-    <Row className="h-100">
-      <Col className="align-items-center">
-        <Formik
-          initialValues={{
-            firstName: user.firstName,
-            lastName: user.lastName,
-            email: user.email,
-          }}
-          validationSchema={profileSchema}
-          onSubmit={handleUserProfileEdits}
-          enableReinitialize
-        >
-          {(props) => (
-            <Form>
-              <Row>
-                <Col>
-                  <div className="user_profile_icon bg-warning-subtle border d-flex align-items-center text-body justify-content-center p-4">
-                    {props.values.firstName &&
-                      props.values.firstName.split("")[0] +
-                        props.values.lastName.split("")[0]}
-                  </div>
-                </Col>
-              </Row>
+    <Formik
+      initialValues={{
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      }}
+      validationSchema={profileSchema}
+      onSubmit={handleUserProfileEdits}
+      enableReinitialize
+    >
+      {(props) => (
+        <Form>
+          <Row>
+            <Col>
+              <div className="user_profile_icon bg-warning-subtle border d-flex align-items-center text-body justify-content-center p-4">
+                {props.values.firstName &&
+                  props.values.firstName.split("")[0] +
+                    props.values.lastName.split("")[0]}
+              </div>
+            </Col>
+          </Row>
 
-              <Row>
-                <LUIFormField
-                  name="firstName"
-                  label="First Name"
-                  placeholder="Enter your first name"
-                  readOnly={isReadMode}
-                  enableValidFeedback={false}
-                  {...props}
-                />
-              </Row>
-              <Row>
-                <LUIFormField
-                  name="lastName"
-                  label="Last Name"
-                  placeholder="Enter your last name"
-                  readOnly={isReadMode}
-                  enableValidFeedback={false}
-                  {...props}
-                />
-              </Row>
-              <Row>
-                <Col>
-                  <LUIFormField
-                    name="email"
-                    label="Email"
-                    placeholder="Enter your email"
-                    readOnly={isReadMode}
-                    enableValidFeedback={false}
-                    {...props}
-                  />
-                </Col>
-              </Row>
-              <Container fluid>
-                <Row className="mt-4 mb-4">
-                  <EditCTAButtons {...props} />
-                </Row>
-              </Container>
-            </Form>
-          )}
-        </Formik>
-      </Col>
-    </Row>
+          <Row>
+            <LUIFormField
+              name="firstName"
+              label="First Name"
+              placeholder="Enter your first name"
+              readOnly={isReadMode}
+              enableValidFeedback={false}
+              {...props}
+            />
+          </Row>
+          <Row>
+            <LUIFormField
+              name="lastName"
+              label="Last Name"
+              placeholder="Enter your last name"
+              readOnly={isReadMode}
+              enableValidFeedback={false}
+              {...props}
+            />
+          </Row>
+          <Row>
+            <Col>
+              <LUIFormField
+                name="email"
+                label="Email"
+                placeholder="Enter your email"
+                readOnly={isReadMode}
+                enableValidFeedback={false}
+                {...props}
+              />
+            </Col>
+          </Row>
+          <Container fluid>
+            <Row className="mt-4 mb-4">
+              <EditCTAButtons {...props} />
+            </Row>
+          </Container>
+        </Form>
+      )}
+    </Formik>
   );
 };

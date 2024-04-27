@@ -1,11 +1,16 @@
-import data from "./data.json";
+import { Col, Row } from "react-bootstrap";
+import { Outlet } from "react-router-dom";
+import { SectionArticleSideBar } from "./SectionArticleSideBar";
 
-const SideBar = () => <>{data.name}</>;
 export const LanguageDetail = () => {
   return (
-    <>
-      <SideBar />
-      This is Langage Detail
-    </>
+    <Row>
+      <Col xl={3} md={3} sm={4}>
+        <SectionArticleSideBar />
+      </Col>
+      <Col>
+        <Outlet />
+      </Col>
+    </Row>
   );
 };

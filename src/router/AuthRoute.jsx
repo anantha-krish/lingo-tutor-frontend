@@ -1,13 +1,13 @@
 import { Link, Navigate, Outlet } from "react-router-dom";
 import { isAuthenticated } from "../sessionManager";
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useAxiosLoader } from "../api";
 import { BarLoader } from "react-spinners";
 export const AuthRoute = () => {
   const [loading] = useAxiosLoader();
   return isAuthenticated() ? (
-    <>
-      <Row className="mt-2 p-2 bg-primary">
+    <Container fluid>
+      <Row className="p-2 bg-primary">
         <Col>
           <Link className="text-white" to="/">
             Home
@@ -47,7 +47,7 @@ export const AuthRoute = () => {
         )}
       </Row>
       <Outlet />
-    </>
+    </Container>
   ) : (
     <Navigate to="/login" />
   );

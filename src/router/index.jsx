@@ -9,6 +9,7 @@ import {
   LogoutPage,
 } from "../pages";
 import { AuthRoute } from "./AuthRoute";
+import { ArticleDetailComponent } from "../pages/LanguageDetail/ArticleDetailComponent";
 //import { EditProfileComponent } from "../pages/EditProfile";
 
 export const Router = createBrowserRouter([
@@ -26,8 +27,11 @@ export const Router = createBrowserRouter([
         element: <Languages />,
       },
       {
-        path: "/languages/:id",
+        path: "/languages/:languageId/",
         element: <LanguageDetail />,
+        children: [
+          { path: "articles/:articleId", element: <ArticleDetailComponent /> },
+        ],
       },
       {
         path: "/dashboard",

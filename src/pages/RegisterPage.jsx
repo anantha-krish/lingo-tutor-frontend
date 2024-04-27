@@ -42,7 +42,7 @@ export const RegisterPage = () => {
 
   return (
     <Container fluid className="bg-body-tertiary">
-      <Row className="h-100">
+      <Row>
         <Col className="mt-4">
           <Button
             variant="outline-secondary"

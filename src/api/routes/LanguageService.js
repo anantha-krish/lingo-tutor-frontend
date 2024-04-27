@@ -7,3 +7,11 @@ export async function getLanguages() {
     toast.success("Successfully fetched langugages ");
   }
 }
+
+export function getLanguageById(id) {
+  return http.get(`/languages/${id}`);
+}
+
+export function getArticleById(id) {
+  return http.get(`/languages/articles/${id}`);
+}

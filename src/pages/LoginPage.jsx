@@ -47,7 +47,7 @@ export const LoginPage = () => {
       <Row className="vh-100 bg-body-tertiary">
         <Col />
         <Col lg={4} md={8} xs={10}>
-          <Row className="h-100 justify-content-center p-4">
+          <Row className="justify-content-center p-4">
             <Col>
               <Formik
                 initialValues={{
