@@ -10,10 +10,16 @@ export const LUIFormField = ({
   label,
   placeholder,
   values,
+  readOnly = false,
   enableValidFeedback = true,
 }) => {
   const inputId = useId();
-  const validClass = touched[name] && enableValidFeedback ? "is-valid" : "";
+  const triggerValidation = !readOnly && touched[name];
+  const validClass = triggerValidation && enableValidFeedback ? "is-valid" : "";
+  const inputClass = `form-control ${
+    triggerValidation && errors[name] ? "is-invalid" : validClass
+  }`;
+
   return (
     <div className="form-group">
       {label && (
@@ -26,14 +32,16 @@ export const LUIFormField = ({
         value={values[name]}
         id={inputId}
         name={name ?? ""}
-        placeholder={placeholder ?? ""}
         autoComplete="off"
-        className={`form-control ${
-          touched[name] && errors[name] ? "is-invalid" : validClass
-        }`}
+        readOnly={readOnly}
+        className="form-control-plaintext"
+        {...(!readOnly && {
+          placeholder: placeholder ?? "",
+          className: inputClass,
+        })}
       />
       <div className="invalid-feedback field_error">
-        {touched[name] && errors[name]}
+        {triggerValidation && errors[name]}
       </div>
     </div>
   );

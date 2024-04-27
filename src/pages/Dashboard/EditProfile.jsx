@@ -1,12 +1,10 @@
 import { Form, Formik } from "formik";
 import { useEffect, useState } from "react";
-import { Button, Col, Container, Image, Row } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { getUserProfile, updateUserProfile } from "../../api";
 import { LUIFormField } from "../../components";
-import LandscapeLogo from "@assets/images/logo_landscape_transparent.png";
 
 const profileSchema = Yup.object().shape({
   firstName: Yup.string()
@@ -19,15 +17,15 @@ const profileSchema = Yup.object().shape({
 });
 
 export const EditProfileComponent = () => {
-  var navigate = useNavigate();
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  });
+  const [isReadMode, setIsReadMode] = useState(true);
 
   const setUserDetails = ({ firstName, lastName, email }) =>
     setUser({ firstName, lastName, email });
-
-  useEffect(() => {
-    initUserProfile();
-  }, []);
 
   const initUserProfile = async () => {
     try {
@@ -39,12 +37,52 @@ export const EditProfileComponent = () => {
     } catch (error) {}
   };
 
+  useEffect(() => {
+    initUserProfile();
+  }, [isReadMode]);
+
+  const EditCTAButtons = ({ isSubmitting }) => {
+    return isReadMode ? (
+      <>
+        <Col />
+        <Col>
+          <Button
+            className="w-100"
+            type="button"
+            onClick={() => setIsReadMode(false)}
+          >
+            Edit
+          </Button>
+        </Col>
+      </>
+    ) : (
+      <>
+        <Col>
+          <Button
+            className=" w-100"
+            type="button"
+            variant="secondary"
+            disabled={isSubmitting}
+            onClick={() => setIsReadMode(true)}
+          >
+            Cancel
+          </Button>
+        </Col>
+        <Col>
+          <Button className=" w-100" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? "Updating..." : "Update"}
+          </Button>
+        </Col>
+      </>
+    );
+  };
+
   const handleUserProfileEdits = async (values) => {
     try {
       var res = await updateUserProfile(values);
       if (res.status == 200) {
         toast.success(
-          `User: ${res.data.username} profile updated successfully`
+          `User: ${res.data.userName} profile updated successfully`
         );
       }
       // eslint-disable-next-line no-empty
@@ -52,93 +90,71 @@ export const EditProfileComponent = () => {
   };
 
   return (
-    <Container fluid className="bg-body-tertiary">
-      <Row className="h-100">
-        <Col className="mt-4">
-          <Button
-            variant="outline-secondary"
-            onClick={() => navigate("/login")}
-          >
-            Back to Login
-          </Button>
-        </Col>
-        <Col lg={6} md={10} xs={12} className="align-items-center">
-          <Formik
-            initialValues={{
-              firstName: user.firstName,
-              lastName: user.lastName,
-              email: user.email,
-            }}
-            enableReinitialize
-            validationSchema={profileSchema}
-            onSubmit={handleUserProfileEdits}
-          >
-            {(props) => (
-              <Form onSubmit={props.handleSubmit}>
-                <Row>
-                  <Row>
-                    <Col>
-                      <Image src={LandscapeLogo} height={150} />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <LUIFormField
-                        name="firstName"
-                        label="First Name"
-                        placeholder="Enter your first name"
-                        {...props}
-                      />
-                    </Col>
-                    <Col>
-                      <LUIFormField
-                        name="lastName"
-                        label="Last Name"
-                        placeholder="Enter your last name"
-                        {...props}
-                      />
-                    </Col>
-                  </Row>
+    <Row className="h-100">
+      <Col className="align-items-center">
+        <Formik
+          initialValues={{
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+          }}
+          validationSchema={profileSchema}
+          onSubmit={handleUserProfileEdits}
+          enableReinitialize
+        >
+          {(props) => (
+            <Form>
+              <Row>
+                <Col>
+                  <div className="user_profile_icon bg-warning-subtle border d-flex align-items-center text-body justify-content-center p-4">
+                    {props.values.firstName &&
+                      props.values.firstName.split("")[0] +
+                        props.values.lastName.split("")[0]}
+                  </div>
+                </Col>
+              </Row>
 
-                  <Col>
-                    <LUIFormField
-                      name="email"
-                      label="Email"
-                      placeholder="Enter your email"
-                      {...props}
-                    />
-                  </Col>
+              <Row>
+                <LUIFormField
+                  name="firstName"
+                  label="First Name"
+                  placeholder="Enter your first name"
+                  readOnly={isReadMode}
+                  enableValidFeedback={false}
+                  {...props}
+                />
+              </Row>
+              <Row>
+                <LUIFormField
+                  name="lastName"
+                  label="Last Name"
+                  placeholder="Enter your last name"
+                  readOnly={isReadMode}
+                  enableValidFeedback={false}
+                  {...props}
+                />
+              </Row>
+              <Row>
+                <Col>
+                  <LUIFormField
+                    name="email"
+                    label="Email"
+                    placeholder="Enter your email"
+                    readOnly={isReadMode}
+                    enableValidFeedback={false}
+                    {...props}
+                  />
+                </Col>
+              </Row>
+              <Container fluid>
+                <Row className="mt-4 mb-4">
+                  <EditCTAButtons {...props} />
                 </Row>
-                <Container fluid>
-                  <Row className="mt-4 mb-4">
-                    <Col>
-                      <Button
-                        className=" w-100"
-                        type="reset"
-                        variant="secondary"
-                        disabled={props.isSubmitting}
-                      >
-                        Cancel
-                      </Button>
-                    </Col>
-
-                    <Col>
-                      <Button
-                        className=" w-100"
-                        type="submit"
-                        disabled={props.isSubmitting}
-                      >
-                        {props.isSubmitting ? "Registering..." : "Register"}
-                      </Button>
-                    </Col>
-                  </Row>
-                </Container>
-              </Form>
-            )}
-          </Formik>
-        </Col>
-        <Col />
-      </Row>
-    </Container>
+              </Container>
+            </Form>
+          )}
+        </Formik>
+      </Col>
+    </Row>
   );
 };
