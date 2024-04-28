@@ -1,10 +1,9 @@
 import http from "../http";
-import toast from "react-hot-toast";
 
-export async function getQuizzes() {
-  var response = await http(`/quizzes`);
+export function getMcqsByQuizId(quizId) {
+  return http.get(`/quizzes/${quizId}`);
+}
 
-  if (response.status == 200) {
-    toast.success("Successfully fetched quizzes ");
-  }
+export function getMcqById(mcqId) {
+  return http.get(`/quizzes/mcqs/${mcqId}`);
 }

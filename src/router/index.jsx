@@ -7,6 +7,8 @@ import {
   DashboardPage,
   LoginPage,
   LogoutPage,
+  QuizPage,
+  MultiChoiceQnComponent,
 } from "../pages";
 import { AuthRoute } from "./AuthRoute";
 import { ArticleDetailComponent } from "../pages/LanguageDetail/ArticleDetailComponent";
@@ -20,10 +22,10 @@ export const Router = createBrowserRouter([
       {
         path: "/",
         // considering languages will be homepage
-        element: <Navigate to="/languages" />,
+        element: <Navigate to="/languages/" />,
       },
       {
-        path: "/languages",
+        path: "/languages/",
         element: <Languages />,
       },
       {
@@ -31,6 +33,13 @@ export const Router = createBrowserRouter([
         element: <LanguageDetail />,
         children: [
           { path: "articles/:articleId", element: <ArticleDetailComponent /> },
+        ],
+      },
+      {
+        path: "/quizzes/:quizId/",
+        element: <QuizPage />,
+        children: [
+          { path: "mcqs/:mcqId", element: <MultiChoiceQnComponent /> },
         ],
       },
       {

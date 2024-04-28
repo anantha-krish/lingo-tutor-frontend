@@ -14,7 +14,7 @@ export const AuthRoute = () => {
           </Link>
         </Col>
         <Col>
-          <Link className="text-white" to="/quizzes/1001">
+          <Link className="text-white" to="/quizzes/7001">
             Quizzes (Dev only)
           </Link>
         </Col>
