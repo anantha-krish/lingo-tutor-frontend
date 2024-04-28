@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import { Col, Row, Container } from "react-bootstrap";
 import { getMcqsByQuizId } from "../../api";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
 export const QuizPage = () => {
   const [mcqIds, setMcqIds] = useState([]);
+  const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
     const fetchMcqs = async () => {
       var res = await getMcqsByQuizId(params.quizId);
       setMcqIds(res.data.mcqs ?? []);
+      navigate(`/quizzes/${params.quizId}/mcqs/${res.data.mcqs[0]}`);
     };
     fetchMcqs();
   }, [params.quizId]);
