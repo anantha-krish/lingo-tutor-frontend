@@ -34,3 +34,10 @@ html {
 .sidebar {
   min-height: 80vh;
 }
+.card_radio_btn .form-check-input {
+  display: none;
+}
+
+.card.selected {
+  box-shadow: 0 0 8px 2px #2ecc71;
+}

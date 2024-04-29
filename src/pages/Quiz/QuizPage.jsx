@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Col, Row, Container } from "react-bootstrap";
+import { Button, Col, Container, Row } from "react-bootstrap";
+import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { getMcqsByQuizId } from "../../api";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 
 export const QuizPage = () => {
   const [mcqIds, setMcqIds] = useState([]);
+  const [submittedAns, setSubmittedAns] = useState([]);
   const navigate = useNavigate();
   const params = useParams();
   useEffect(() => {
@@ -15,23 +16,49 @@ export const QuizPage = () => {
     };
     fetchMcqs();
   }, [params.quizId]);
+
+  const isAnswerSaved = (mcqId) =>
+    submittedAns.some((entry) => entry.mcq == mcqId);
   return (
     <Container>
       <Row>
-        <Col>
-          <ul>
+        <Col lg={4}>
+          <div className="d-grid gap-4 bg-warning-subtle p-4">
             {mcqIds.length > 0 &&
               mcqIds.map((mcqId, index) => (
-                <li key={index}>
-                  <Link to={`/quizzes/${params.quizId}/mcqs/${mcqId}`}>
-                    Q{index + 1}
-                  </Link>
-                </li>
+                <Button
+                  key={index}
+                  variant={`outline-${
+                    isAnswerSaved(mcqId) ? "primary" : "warning"
+                  }`}
+                  active={isAnswerSaved(mcqId) || mcqId == params.mcqId}
+                  size="lg"
+                  onClick={() =>
+                    navigate(`/quizzes/${params.quizId}/mcqs/${mcqId}`)
+                  }
+                >
+                  Q{index + 1}
+                </Button>
               ))}
-          </ul>
+          </div>
         </Col>
         <Col>
-          <Outlet />
+          <Outlet context={[submittedAns, setSubmittedAns]} />
+          <Container fluid>
+            <Row className="mt-4 mb-4">
+              <Col>
+                <Button className=" w-100" type="button" variant="secondary">
+                  Previous
+                </Button>
+              </Col>
+
+              <Col>
+                <Button className=" w-100" type="submit">
+                  Next
+                </Button>
+              </Col>
+            </Row>
+          </Container>
         </Col>
       </Row>
     </Container>
