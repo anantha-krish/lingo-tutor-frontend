@@ -7,3 +7,7 @@ export function getMcqsByQuizId(quizId) {
 export function getMcqById(mcqId) {
   return http.get(`/quizzes/mcqs/${mcqId}`);
 }
+
+export function submitAnswer(quizId, submittedAnswer) {
+  return http.post(`/quizzes/${quizId}/answers/scores`, submittedAnswer);
+}
