@@ -39,15 +39,18 @@ export const ResultPage = () => {
               <br />
               Your score for last assesment is
               {scoreData.score > 0 && (
-                <h3 className="h2 mb-2" style={{ fontSize: 36 }}>
-                  {scoreData.score.toString().padStart(2, 0)} /{" "}
-                  {scoreData.maxScore.toString().padStart(2, 0)}
-                </h3>
+                <>
+                  <h3 className="h2 mb-2" style={{ fontSize: 36 }}>
+                    {scoreData.score.toString().padStart(2, 0)} /{" "}
+                    {scoreData.maxScore.toString().padStart(2, 0)}
+                  </h3>
+                  <br />
+                  <span className="text-dark" style={{ fontSize: 24 }}>
+                    Percentage: {scoreData.percentage.toString().padStart(2, 0)}
+                    %
+                  </span>
+                </>
               )}
-              <br />
-              <span className="text-dark" style={{ fontSize: 24 }}>
-                Percentage: {scoreData.percentage.toString().padStart(2, 0)}%
-              </span>
               <p className="mb-5">
                 Lingo Tutor suggests to you to keep learning.
               </p>

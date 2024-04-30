@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { getMcqsByQuizId, submitAnswer } from "../../api";
-import toast from "react-hot-toast";
 
 export const QuizPage = () => {
   const [mcqIds, setMcqIds] = useState([]);
