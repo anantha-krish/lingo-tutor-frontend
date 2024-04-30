@@ -9,6 +9,7 @@ import {
   LogoutPage,
   QuizPage,
   MultiChoiceQnComponent,
+  ResultPage,
 } from "../pages";
 import { AuthRoute } from "./AuthRoute";
 import { ArticleDetailComponent } from "../pages/LanguageDetail/ArticleDetailComponent";
@@ -41,6 +42,10 @@ export const Router = createBrowserRouter([
         children: [
           { path: "mcqs/:mcqId", element: <MultiChoiceQnComponent /> },
         ],
+      },
+      {
+        path: "results/quizzes/:quizId/",
+        element: <ResultPage />,
       },
       {
         path: "/dashboard",

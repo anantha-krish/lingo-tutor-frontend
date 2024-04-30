@@ -22,9 +22,7 @@ export const QuizPage = () => {
   const finishQuiz = async () => {
     var response = await submitAnswer(params.quizId, submittedAns);
     if (response.status == 200) {
-      toast.success(
-        `You scored ${response.data.score} out of ${response.data.maxScore}`
-      );
+      navigate(`/results/quizzes/${params.quizId}`);
     }
   };
   const navigatePage = (pageNumber) => {

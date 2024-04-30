@@ -13,3 +13,7 @@ export function updateUserProfile(formObject) {
 export function getUserProfile() {
   return http.get("/user/profile");
 }
+
+export function getUserScoreByQuizId(quizId) {
+  return http.get(`/user/scores/quizzes/${quizId}`);
+}

@@ -19,6 +19,11 @@ export const AuthRoute = () => {
           </Link>
         </Col>
         <Col>
+          <Link className="text-white" to="results/quizzes/7001">
+            Quizz Result (Dev only)
+          </Link>
+        </Col>
+        <Col>
           <Link className="text-white" to="/languages/1001">
             Langugage Detail (Dev only)
           </Link>
