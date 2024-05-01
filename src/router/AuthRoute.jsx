@@ -45,11 +45,13 @@ export const AuthRoute = () => {
         </Col>
       </Row>
       <Row style={{ minHeight: 10 }}>
-        {loading ? (
-          <BarLoader color="#36d7b7" style={{ width: "100%" }} height={10} />
-        ) : (
-          " "
-        )}
+        <Col lg={12}>
+          {loading ? (
+            <BarLoader color="#36d7b7" className="w-100" height={10} />
+          ) : (
+            " "
+          )}
+        </Col>
       </Row>
       <Outlet />
     </Container>
