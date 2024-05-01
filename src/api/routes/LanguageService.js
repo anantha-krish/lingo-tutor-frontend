@@ -6,6 +6,7 @@ export async function getLanguages() {
   if (response.status == 200) {
     toast.success("Successfully fetched langugages ");
   }
+  return response;
 }
 
 export function getLanguageById(id) {
