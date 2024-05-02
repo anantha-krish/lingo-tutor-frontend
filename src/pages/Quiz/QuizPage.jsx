@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button, Col, Container, Row } from "react-bootstrap";
+import { ArrowLeftCircle } from "react-bootstrap-icons";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { getMcqsByQuizId, submitAnswer } from "../../api";
 
@@ -13,10 +14,12 @@ export const QuizPage = () => {
     const fetchMcqs = async () => {
       var res = await getMcqsByQuizId(params.quizId);
       setMcqIds(res.data.mcqs ?? []);
-      navigate(`/quizzes/${params.quizId}/mcqs/${res.data.mcqs[pageNum]}`);
+      navigate(
+        `/languages/${params.languageId}/quizzes/${params.quizId}/mcqs/${res.data.mcqs[pageNum]}`
+      );
     };
     fetchMcqs();
-  }, [params.quizId, pageNum, navigate]);
+  }, [params.quizId, pageNum, navigate, params.languageId]);
 
   const finishQuiz = async () => {
     var response = await submitAnswer(params.quizId, submittedAns);
@@ -27,7 +30,9 @@ export const QuizPage = () => {
   const navigatePage = (pageNumber) => {
     setPageNum(
       pageNumber,
-      navigate(`/quizzes/${params.quizId}/mcqs/${mcqIds[pageNumber]}`)
+      navigate(
+        `/languages/${params.languageId}/quizzes/${params.quizId}/mcqs/${mcqIds[pageNumber]}`
+      )
     );
   };
 
@@ -37,6 +42,18 @@ export const QuizPage = () => {
     <Container>
       <Row>
         <Col lg={4}>
+          <Button
+            variant="outline-secondary"
+            size="lg"
+            className="mb-4 text-center"
+            onClick={() => {
+              navigate(`/languages/${params.languageId}`);
+            }}
+          >
+            <ArrowLeftCircle />
+            <span style={{ marginLeft: 5 }}>Back to Lessons</span>
+          </Button>
+
           <div className="d-grid gap-4 bg-warning-subtle p-4">
             {mcqIds.length > 0 &&
               mcqIds.map((mcqId, index) => (
@@ -49,7 +66,7 @@ export const QuizPage = () => {
                   size="lg"
                   onClick={() => {
                     setPageNum(index);
-                    navigate(`/quizzes/${params.quizId}/mcqs/${mcqId}`);
+                    `/languages/${params.languageId}/quizzes/${params.quizId}/mcqs/${mcqId}`;
                   }}
                 >
                   Q{index + 1}

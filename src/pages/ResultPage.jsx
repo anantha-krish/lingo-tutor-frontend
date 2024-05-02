@@ -38,7 +38,7 @@ export const ResultPage = () => {
               />
               <br />
               Your score for last assesment is
-              {scoreData.score > 0 && (
+              {scoreData.maxScore > 0 && (
                 <>
                   <h3 className="h2 mb-2" style={{ fontSize: 36 }}>
                     {scoreData.score.toString().padStart(2, 0)} /{" "}
