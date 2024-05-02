@@ -1,4 +1,4 @@
-import Languages from "../Languages";
+import Languages from "../pages/Languages";
 import { createBrowserRouter, Navigate } from "react-router-dom";
 import {
   RegisterPage,
