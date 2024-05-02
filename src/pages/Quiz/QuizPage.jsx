@@ -16,7 +16,7 @@ export const QuizPage = () => {
       navigate(`/quizzes/${params.quizId}/mcqs/${res.data.mcqs[pageNum]}`);
     };
     fetchMcqs();
-  }, [params.quizId]);
+  }, [params.quizId, pageNum, navigate]);
 
   const finishQuiz = async () => {
     var response = await submitAnswer(params.quizId, submittedAns);
