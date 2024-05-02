@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getLanguageById } from "../../api";
+import { getLanguageById, saveArticleVisit } from "../../api";
+import { getUsername } from "../../sessionManager";
 export const SectionArticleSideBar = () => {
   const params = useParams();
   const navigate = useNavigate();
+  var username = getUsername();
   const [lang, setLang] = useState({
     sections: [],
     quizzes: [],
@@ -35,6 +37,9 @@ export const SectionArticleSideBar = () => {
                     <li key={article.id} className="p-2">
                       <Link
                         to={`/languages/${params.languageId}/articles/${article.id}`}
+                        onClick={() => {
+                          saveArticleVisit(article.id);
+                        }}
                       >
                         {article.name}
                       </Link>
@@ -48,19 +53,12 @@ export const SectionArticleSideBar = () => {
       <div>
         <h4>Quiz</h4>
         <ul>
-          {lang.quizzes.length > 0 && 
+          {lang.quizzes.length > 0 &&
             lang.quizzes.map((quiz) => (
               <li key={quiz.id} className="p-2">
-                {quiz.name}
-              
-                  <Nav.Link
-                    to={`/languages/${params.languageId}/quizzes/${quiz.id}`} onClick={() => navigate(`/languages/${params.languageId}/quizzes/${quiz.id}`)}
-                  >
-                    {quiz.name}
-                  </Nav.Link>
-                
+                <Link to={`/quizzes/${quiz.id}`}>{quiz.name}</Link>
               </li>
-            )) }
+            ))}
         </ul>
       </div>
     </Nav>
