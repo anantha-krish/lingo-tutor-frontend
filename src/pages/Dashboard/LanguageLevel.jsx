@@ -1,28 +1,12 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import {
-  Image,
-  Nav,
-  Placeholder,
-  ProgressBar,
-  Tab,
-  Table,
-} from "react-bootstrap";
+import { Nav, Placeholder, ProgressBar, Tab, Table } from "react-bootstrap";
+import { CheckCircleFill, XCircleFill } from "react-bootstrap-icons";
 import {
   getLanguageById,
   getLanguages,
   getUserScoreByQuizId,
   useAxiosLoader,
 } from "../../api";
-import {
-  Check2,
-  Check2Circle,
-  CheckCircleFill,
-  Clipboard2Check,
-  Clipboard2CheckFill,
-  Clipboard2X,
-  Clipboard2XFill,
-  XCircleFill,
-} from "react-bootstrap-icons";
 
 export const LanguageLevel = () => {
   const [loading] = useAxiosLoader();
@@ -189,7 +173,9 @@ export const LanguageLevel = () => {
                     <td className="text-center">
                       {renderData(
                         <>
-                          {quiz.status === "ATTEMPTED" ? (
+                          {quiz.status === "ATTEMPTED" &&
+                          quiz.maxScore > 0 &&
+                          quiz.score / quiz.maxScore > 0.5 ? (
                             <CheckCircleFill className="text-success" />
                           ) : (
                             <XCircleFill className="text-danger" />

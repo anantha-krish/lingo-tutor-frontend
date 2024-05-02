@@ -25,9 +25,17 @@ export const Router = createBrowserRouter([
         // considering languages will be homepage
         element: <Navigate to="/languages/" />,
       },
+
       {
         path: "/languages/",
         element: <Languages />,
+      },
+      {
+        path: "/languages/:languageId/quizzes/:quizId/",
+        element: <QuizPage />,
+        children: [
+          { path: "mcqs/:mcqId", element: <MultiChoiceQnComponent /> },
+        ],
       },
       {
         path: "/languages/:languageId/",
@@ -36,13 +44,7 @@ export const Router = createBrowserRouter([
           { path: "articles/:articleId", element: <ArticleDetailComponent /> },
         ],
       },
-      {
-        path: "/quizzes/:quizId/",
-        element: <QuizPage />,
-        children: [
-          { path: "mcqs/:mcqId", element: <MultiChoiceQnComponent /> },
-        ],
-      },
+
       {
         path: "results/quizzes/:quizId/",
         element: <ResultPage />,
