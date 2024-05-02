@@ -21,16 +21,36 @@ const Languages = () => {
       <Row>
         {languages.map((language) => (
           <Col key={language.id}>
-            <Card key={language.id} style={{ width: '20rem', margin: '20px' }} onClick={() => { navigate(`/languages/${language.id}`); }}>
-              <Card.Img variant="top" src="../assets/images/read.jpg"/>
-              <Card.Title style={{ fontSize: '2rem', textAlign: 'center', margin: '5rem'}}>{language.name}</Card.Title>
-            </Card>  
-          </Col> 
+            <Card
+              key={language.id}
+              style={{ width: "20rem", margin: "20px" }}
+              onClick={() => {
+                navigate(`/languages/${language.id}`);
+              }}
+            >
+              <Card.Img
+                variant="top"
+                src={
+                  new URL(
+                    `../assets/images/${language.id}.png`,
+                    import.meta.url
+                  ).href
+                }
+              />
+              <Card.Title
+                style={{
+                  fontSize: "2rem",
+                  textAlign: "center",
+                  margin: "5rem",
+                }}
+              >
+                {language.name}
+              </Card.Title>
+            </Card>
+          </Col>
         ))}
       </Row>
-      
     </Container>
-    
   );
 };
 
