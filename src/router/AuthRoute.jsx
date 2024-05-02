@@ -8,13 +8,11 @@ export const AuthRoute = () => {
   const [loading] = useAxiosLoader();
   var username = getUsername();
   return isAuthenticated() ? (
-    <Container fluid>
-      <Navbar>
+    <Container fluid >
+      <Navbar class="navbar navbar-default">
         <Row >
           <Col>
-            <div className="p-3 bg-white">
-              <Image src={BrandLogo} height={70} style={{ margin: 10 }}/>
-            </div>
+              <Image src={BrandLogo} height={60} style={{ margin: 10, width: 100 }}/>
           </Col>
           <Col>
             <Nav className="p-2 bg-primary">
