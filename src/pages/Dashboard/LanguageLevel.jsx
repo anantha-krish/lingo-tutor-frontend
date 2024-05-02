@@ -1,12 +1,28 @@
-import { useEffect, useState } from "react";
-import { Button, Row, Table } from "react-bootstrap";
-import { ClockLoader } from "react-spinners";
+import { useEffect, useLayoutEffect, useState } from "react";
+import {
+  Image,
+  Nav,
+  Placeholder,
+  ProgressBar,
+  Tab,
+  Table,
+} from "react-bootstrap";
 import {
   getLanguageById,
   getLanguages,
   getUserScoreByQuizId,
   useAxiosLoader,
 } from "../../api";
+import {
+  Check2,
+  Check2Circle,
+  CheckCircleFill,
+  Clipboard2Check,
+  Clipboard2CheckFill,
+  Clipboard2X,
+  Clipboard2XFill,
+  XCircleFill,
+} from "react-bootstrap-icons";
 
 export const LanguageLevel = () => {
   const [loading] = useAxiosLoader();
@@ -17,7 +33,9 @@ export const LanguageLevel = () => {
   const [consolidatedQuiz, setConsolidatedQuiz] = useState([
     { id: 0, name: "", score: 0, maxScore: 0, status: "" },
   ]);
-  useEffect(() => {
+  const [level, setLevel] = useState();
+  const [percentage, setPercentage] = useState();
+  useLayoutEffect(() => {
     const fetchLanguages = async () => {
       var langListResp = await getLanguages();
       if (langListResp.status === 200) {
@@ -55,6 +73,7 @@ export const LanguageLevel = () => {
 
   useEffect(() => {
     if (quizList.length === 0) return;
+
     var consolidatedList = [];
     for (var quiz of quizList) {
       var quizAttempt = attemptedQuizList.find(
@@ -73,52 +92,138 @@ export const LanguageLevel = () => {
       ];
     }
     setConsolidatedQuiz(consolidatedList);
-  }, [attemptedQuizList, quizList]);
+  }, [attemptedQuizList, quizList, loading]);
 
+  useEffect(() => {
+    if (consolidatedQuiz.length == 0) return;
+    var userLevel = [
+      "L1 Beginner",
+      "L2 Intermediate",
+      "L3 Advanced",
+      "L4 Expert",
+    ];
+    var total = consolidatedQuiz.reduce(
+      (prev, curr) => ({
+        score: prev.score + curr.score,
+        maxScore: curr.maxScore + prev.maxScore,
+      }),
+      { score: 0, maxScore: 0 }
+    );
+
+    var percentage = Math.floor((total.score * 100) / total.maxScore);
+    setPercentage(percentage);
+    var level = 0;
+    if (percentage > 80) {
+      level = 3;
+    } else if (percentage > 60) {
+      level = 2;
+    } else if (percentage > 30) {
+      level = 1;
+    }
+    setLevel(userLevel[level]);
+  }, [consolidatedQuiz]);
+  const renderData = (data) =>
+    loading ? <Placeholder xs={12} bg="secondary" /> : data;
+  const getBarColor = () => {
+    if (percentage > 80) {
+      return "success";
+    } else if (percentage > 60) {
+      return "info";
+    } else if (percentage > 30) {
+      return "warning";
+    }
+    return "danger";
+  };
   return (
-    <div>
-      {languages.map((lang) => (
-        <Button
-          key={`btn-lang${lang.id}`}
-          onClick={() => setSelectedLang(lang.id)}
-        >
-          {lang.name}
-        </Button>
-      ))}
-      {loading ? (
-        <Row>
-          <br />
-          <br />
-          <ClockLoader color="orange" />
-        </Row>
-      ) : (
-        consolidatedQuiz.length > 0 && (
+    <Tab.Container defaultActiveKey={selectedLang}>
+      <Nav variant="pills">
+        {languages.map((lang) => (
+          <Nav.Item key={`btn-lang${lang.id}`} className="p-1">
+            <Nav.Link
+              onClick={() => setSelectedLang(lang.id)}
+              active={selectedLang == lang.id}
+            >
+              {lang.name}
+            </Nav.Link>
+          </Nav.Item>
+        ))}
+      </Nav>
+      <Tab.Content>
+        {consolidatedQuiz.length > 0 && (
           <>
             <Table responsive>
               <thead>
                 <tr>
                   <th>Quiz Name</th>
-                  <th>Quiz Level</th>
-                  <th>Score</th>
-                  <th>Max Score</th>
-                  <th>Status</th>
+                  <th>Difficulty Level</th>
+                  <th className="text-center">Score</th>
+                  <th className="text-center">Max Score</th>
+                  <th className="text-center">Certified</th>
                 </tr>
               </thead>
               <tbody>
                 {consolidatedQuiz.map((quiz) => (
-                  <tr key={`row_${quiz.id}`}>
-                    <td>{quiz.name}</td>
-                    <td>{quiz.level}</td>
-                    <td>{quiz.score}</td>
-                    <td>{quiz.maxScore}</td>
-                    <td>{quiz.status}</td>
+                  <tr className="align-top" key={`row_${quiz.id}`}>
+                    <td>{renderData(quiz.name)}</td>
+                    <td>
+                      {renderData(
+                        quiz.level && (
+                          <span
+                            className={`badge text-bg-${
+                              quiz.level === "EASY" ? "success" : ""
+                            }${quiz.level === "MEDIUM" ? "warning" : ""}${
+                              quiz.level === "HARD" ||
+                              quiz.level === "DIFFICULT"
+                                ? "danger"
+                                : ""
+                            }`}
+                            style={{ textTransform: "capitalize" }}
+                          >
+                            {quiz.level.toLowerCase()}
+                          </span>
+                        )
+                      )}
+                    </td>
+                    <td className="text-center">{renderData(quiz.score)}</td>
+                    <td className="text-center">{renderData(quiz.maxScore)}</td>
+                    <td className="text-center">
+                      {renderData(
+                        <>
+                          {quiz.status === "ATTEMPTED" ? (
+                            <CheckCircleFill className="text-success" />
+                          ) : (
+                            <XCircleFill className="text-danger" />
+                          )}
+                        </>
+                      )}
+                    </td>
                   </tr>
                 ))}
+                <tr>
+                  <td className="text-end" colSpan={5}>
+                    {renderData(
+                      <>
+                        Your language level:
+                        <strong> {renderData(level)}</strong>
+                        <br />
+                      </>
+                    )}
+
+                    {renderData(
+                      <ProgressBar
+                        now={percentage}
+                        variant={getBarColor()}
+                        min={0}
+                        max={100}
+                      />
+                    )}
+                  </td>
+                </tr>
               </tbody>
             </Table>
           </>
-        )
-      )}
-    </div>
+        )}
+      </Tab.Content>
+    </Tab.Container>
   );
 };

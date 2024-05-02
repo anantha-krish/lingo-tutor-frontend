@@ -5,13 +5,13 @@ import { LanguageLevel } from "./LanguageLevel";
 export const DashboardPage = () => (
   <Row>
     <Col />
-    <Col lg={3} className="align-items-center">
+    <Col className="align-items-center">
       <EditProfileComponent />
     </Col>
-    <Col>
+    <Col lg={1} />
+    <Col lg={6}>
       <LanguageLevel />
     </Col>
-    <Col lg={3}></Col>
     <Col />
   </Row>
 );
