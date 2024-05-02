@@ -1,4 +1,4 @@
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import { isAuthenticated, getUsername } from "../sessionManager";
 import { Container, Navbar, Nav, Image, Row, Col } from "react-bootstrap";
 import { useAxiosLoader } from "../api";
@@ -20,39 +20,44 @@ export const AuthRoute = () => {
             <Nav className="p-2 bg-primary">
               <Row className="p-2 bg-primary">
                 <Col>
-                  <Link className="text-white" to="/">
+                  <Nav.Link className="text-white" to="/">
                     Home
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="/quizzes/7001">
+                  <Nav.Link className="text-white" to="/quizzes/7001">
                     Quizzes (Dev only)
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="results/quizzes/7001">
+                  <Nav.Link className="text-white" to="results/quizzes/7001">
                     Quizz Result (Dev only)
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="/languages/1001">
+                  <Nav.Link className="text-white" to="/languages/1001">
                     Langugage Detail (Dev only)
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="/dashboard">
+                  <Nav.Link className="text-white" to="/dashboard">
                     User Dashboard
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="/dummy">
+                  <Nav.Link className="text-white" to="/dummy">
                     page Not found (Dev only)
-                  </Link>
+                  </Nav.Link>
                 </Col>
                 <Col>
-                  <Link className="text-white" to="/logout">
+                  <Nav.Link className="text-white" to="/logout">
                     Logout (Dev only)
-                  </Link>
+                  </Nav.Link>
+                </Col>
+                <Col>
+                  <h5 className="text-white" style={{ margin: 10 }}>
+                    Hi! {username}
+                  </h5>
                 </Col>
               </Row>
             </Nav>
