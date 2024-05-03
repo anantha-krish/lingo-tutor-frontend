@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Accordion, Col, Nav, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getLanguageById } from "../../api";
+import toast from "react-hot-toast";
 export const SectionArticleSideBar = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -14,10 +15,13 @@ export const SectionArticleSideBar = () => {
       var res = await getLanguageById(params.languageId);
       if (res.status == 200) {
         setLang(res.data);
-        console.log(res.data);
-        navigate(
-          `/languages/${params.languageId}/articles/${res.data.sections[0].articles[0].id}`
-        );
+        if (res.data.sections.length > 0) {
+          navigate(
+            `/languages/${params.languageId}/articles/${res.data.sections[0].articles[0].id}`
+          );
+        } else {
+          toast.error("Oops!! No Sections found for this language");
+        }
       }
     };
     fetchMenu();

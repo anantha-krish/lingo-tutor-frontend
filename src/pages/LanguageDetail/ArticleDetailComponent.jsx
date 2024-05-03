@@ -7,7 +7,7 @@ import { ArrowLeftCircle } from "react-bootstrap-icons";
 export const ArticleDetailComponent = () => {
   const params = useParams();
   const [article, setArticle] = useState({
-    sections: [],
+    sections: [{ articles: [] }],
   });
   const navigate = useNavigate();
   useEffect(() => {
