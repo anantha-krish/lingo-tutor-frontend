@@ -6,19 +6,16 @@ import { RecentlyVisited } from "./RecentlyVisited";
 export const DashboardPage = () => (
   <Container fluid>
     <Row>
-      <Col lg={3} className="align-items-center">
+      <Col lg={3} md sm className="align-items-center">
         <EditProfileComponent />
       </Col>
 
-      <Col lg={8}>
-        <Row>
-          <RecentlyVisited />
-        </Row>
-        <Row>
-          <LanguageLevel />
-        </Row>
+      <Col lg md sm className="mt-2">
+        <RecentlyVisited />
       </Col>
-      <Col />
+      <Col lg={5} md sm className="mt-2">
+        <LanguageLevel />
+      </Col>
     </Row>
   </Container>
 );
