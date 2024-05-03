@@ -11,3 +11,6 @@ export function getLanguageById(id) {
 export function getArticleById(id) {
   return http.get(`/languages/articles/${id}`);
 }
+export function getArticleInfoById(id) {
+  return http.get(`/languages/articles/${id}/info`);
+}

@@ -17,3 +17,11 @@ export function getUserProfile() {
 export function getUserScoreByQuizId(quizId) {
   return http.get(`/user/scores/quizzes/${quizId}`);
 }
+
+export function getUserVisitHistory() {
+  return http.get(`/user/visits/articles`);
+}
+
+export function saveUserVisitHistory(articleId) {
+  return http.post(`/user/visits/articles/${articleId}`);
+}

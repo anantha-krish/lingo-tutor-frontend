@@ -1,18 +1,17 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { getArticleById } from "../../api";
+import { getArticleById, saveUserVisitHistory } from "../../api";
 import { Button, Col, Row } from "react-bootstrap";
 import { ArrowLeftCircle } from "react-bootstrap-icons";
 
 export const ArticleDetailComponent = () => {
   const params = useParams();
-  const [article, setArticle] = useState({
-    sections: [{ articles: [] }],
-  });
+  const [article, setArticle] = useState({});
   const navigate = useNavigate();
   useEffect(() => {
     const fetchArticle = async () => {
       var res = await getArticleById(params.articleId);
+      await saveUserVisitHistory(params.articleId);
       if (res.status == 200) {
         setArticle(res.data);
       }
