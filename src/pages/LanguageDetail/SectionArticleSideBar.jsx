@@ -51,14 +51,20 @@ export const SectionArticleSideBar = () => {
         </ul>
       </div>
       <div>
-        <h4>Quiz</h4>
         <ul>
-          {lang.quizzes.length > 0 &&
-            lang.quizzes.map((quiz) => (
-              <li key={quiz.id} className="p-2">
-                <Link to={`/quizzes/${quiz.id}`}>{quiz.name}</Link>
-              </li>
-            ))}
+          {lang.quizzes.length > 0 && (
+            <>
+              <h4>Quiz</h4>
+              {lang.quizzes.map((quiz) => (
+                <Link
+                  key={quiz.id}
+                  to={`/languages/${params.languageId}/quizzes/${quiz.id}`}
+                >
+                  <li>{quiz.name} </li>
+                </Link>
+              ))}
+            </>
+          )}
         </ul>
       </div>
     </Nav>
