@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Accordion, Nav } from "react-bootstrap";
+import { Accordion, Col, Nav, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getLanguageById } from "../../api";
 export const SectionArticleSideBar = () => {
@@ -22,59 +22,73 @@ export const SectionArticleSideBar = () => {
     };
     fetchMenu();
   }, [params.languageId, navigate]);
+  const [selected, setSelected] = useState();
+  useEffect(() => {
+    setSelected(params.articleId);
+  }, [params.articleId]);
   return (
-    <Nav className="text-bg-light sidebar">
-      {lang.sections.length > 0 && (
-        <Accordion
-          className="w-100"
-          defaultActiveKey={lang.sections[0].id}
-          alwaysOpen
-        >
-          {lang.sections.map((section, index) => (
-            <Accordion.Item key={`key_${section.id}`} eventKey={section.id}>
-              <Accordion.Header>
-                <strong>
-                  Section {(index + 1).toString().padStart(2, 0)}:{" "}
-                  {section.name}{" "}
-                </strong>
-              </Accordion.Header>
-              <Accordion.Body>
-                <ul style={{ listStyle: "none" }}>
-                  {section.articles.map((article) => (
-                    <li key={article.id} className="p-2">
-                      <Link
-                        to={`/languages/${params.languageId}/articles/${article.id}`}
-                      >
-                        {article.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-          ))}
-          {lang.quizzes.length > 0 && (
-            <Accordion.Item eventKey="quiz_section">
-              <Accordion.Header>
-                <strong>Quiz Section</strong>
-              </Accordion.Header>
-              <Accordion.Body>
-                <ul style={{ listStyle: "none" }}>
-                  {lang.quizzes.map((quiz) => (
-                    <li key={quiz.id} className="p-2">
-                      <Link
-                        to={`/languages/${params.languageId}/quizzes/${quiz.id}`}
-                      >
-                        {quiz.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </Accordion.Body>
-            </Accordion.Item>
-          )}
-        </Accordion>
-      )}
-    </Nav>
+    <>
+      <Row>
+        <Col>
+          <Nav className="text-bg-light sidebar w-100 h-100">
+            {lang.sections.length > 0 && (
+              <Accordion
+                className="w-100"
+                defaultActiveKey={lang.sections[0].id}
+                alwaysOpen
+              >
+                {lang.sections.map((section, index) => (
+                  <Accordion.Item
+                    key={`key_${section.id}`}
+                    eventKey={section.id}
+                  >
+                    <Accordion.Header>
+                      <strong>
+                        L{(index + 1).toString().padStart(2, 0)}: {section.name}{" "}
+                      </strong>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div>
+                        {section.articles.map((article) => (
+                          <Link
+                            key={article.id}
+                            to={`/languages/${params.languageId}/articles/${article.id}`}
+                            className={`d-flex mb-2 ${
+                              selected == article.id ? "active" : ""
+                            }`}
+                          >
+                            {article.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                ))}
+                {lang.quizzes.length > 0 && (
+                  <Accordion.Item eventKey="quiz_section">
+                    <Accordion.Header>
+                      <strong>Quiz Section</strong>
+                    </Accordion.Header>
+                    <Accordion.Body>
+                      <div>
+                        {lang.quizzes.map((quiz) => (
+                          <Link
+                            className="d-flex mb-2"
+                            key={quiz.id}
+                            to={`/languages/${params.languageId}/quizzes/${quiz.id}`}
+                          >
+                            {quiz.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                )}
+              </Accordion>
+            )}
+          </Nav>
+        </Col>
+      </Row>
+    </>
   );
 };

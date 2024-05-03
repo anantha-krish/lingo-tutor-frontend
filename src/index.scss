@@ -44,3 +44,23 @@ html {
 .card:hover {
   box-shadow: 0 0 8px 2px #2ecc71;
 }
+* {
+  --bs-accordion-active-color: var(--bs-dark-text-emphasis);
+  --bs-accordion-active-bg: var(--bs-secondary-bg);
+  --bs-accordion-border-color: var(--bs-border-color);
+}
+.accordion {
+  a {
+    --bs-link-color-rgb: var(----bs-tertiary-color);
+    text-decoration: none;
+    border-radius: 10px;
+    padding: 8px 12px;
+    &:hover {
+      background-color: var(--bs-tertiary-bg);
+    }
+    &.active {
+      font-weight: bold;
+      background-color: var(--bs-secondary-bg);
+    }
+  }
+}

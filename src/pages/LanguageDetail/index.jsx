@@ -4,7 +4,7 @@ import { SectionArticleSideBar } from "./SectionArticleSideBar";
 
 export const LanguageDetail = () => {
   return (
-    <Row>
+    <Row style={{ minHeight: "86vh" }}>
       <Col xl={3} md={3} sm={4}>
         <SectionArticleSideBar />
       </Col>
