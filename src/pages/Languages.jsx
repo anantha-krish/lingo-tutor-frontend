@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { getLanguages } from "../api";
 import { Container, Card, Row, Col } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Languages = () => {
   const [languages, setLanguages] = useState([]);
-  const navigate = useNavigate();
   useEffect(() => {
     const fetchLanguages = async () => {
       var res = await getLanguages();
@@ -18,37 +17,40 @@ const Languages = () => {
 
   return (
     <Container>
-      <Row>
-        {languages.map((language) => (
-          <Col key={language.id}>
-            <Card
-              key={language.id}
-              style={{ width: "20rem", margin: "20px" }}
-              onClick={() => {
-                navigate(`/languages/${language.id}`);
-              }}
-            >
-              <Card.Img
-                variant="top"
-                src={
-                  new URL(
-                    `../assets/images/${language.id}.png`,
-                    import.meta.url
-                  ).href
-                }
-              />
-              <Card.Title
-                style={{
-                  fontSize: "2rem",
-                  textAlign: "center",
-                  margin: "5rem",
-                }}
-              >
-                {language.name}
-              </Card.Title>
-            </Card>
-          </Col>
-        ))}
+      <Row className="p-2">
+        {languages.length > 0 &&
+          languages.map((language) => (
+            <Col xl={3} lg={4} md sm key={language.id} className="p-4">
+              <Card key={language.id} className="w-100">
+                <Link className="nav-link" to={`/languages/${language.id}`}>
+                  <div style={{ height: 200, width: "100%" }}>
+                    <Card.Img
+                      variant="top"
+                      src={
+                        new URL(
+                          `../assets/images/${language.id}.png`,
+                          import.meta.url
+                        ).href
+                      }
+                      style={{
+                        height: "100%",
+                        width: "100%",
+                      }}
+                    />
+                  </div>
+                  <Card.Header
+                    style={{
+                      fontSize: "2rem",
+                      textAlign: "center",
+                    }}
+                    className="text-middle"
+                  >
+                    {language.name}
+                  </Card.Header>
+                </Link>
+              </Card>
+            </Col>
+          ))}
       </Row>
     </Container>
   );
