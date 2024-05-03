@@ -1,17 +1,18 @@
-import { Col, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { EditProfileComponent } from "./EditProfile";
 import { LanguageLevel } from "./LanguageLevel";
 
 export const DashboardPage = () => (
-  <Row>
-    <Col />
-    <Col className="align-items-center">
-      <EditProfileComponent />
-    </Col>
-    <Col lg={1} />
-    <Col lg={6}>
-      <LanguageLevel />
-    </Col>
-    <Col />
-  </Row>
+  <Container fluid>
+    <Row>
+      <Col lg={3} className="align-items-center">
+        <EditProfileComponent />
+      </Col>
+
+      <Col lg={8}>
+        <LanguageLevel />
+      </Col>
+      <Col />
+    </Row>
+  </Container>
 );

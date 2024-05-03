@@ -100,7 +100,7 @@ export const EditProfileComponent = () => {
       enableReinitialize
     >
       {(props) => (
-        <Form>
+        <Form className="p-2">
           <Row>
             <Col>
               <div className="user_profile_icon bg-warning-subtle border d-flex align-items-center text-body justify-content-center p-4">

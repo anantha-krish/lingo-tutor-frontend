@@ -1,12 +1,18 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import { Nav, Placeholder, ProgressBar, Tab, Table } from "react-bootstrap";
-import { CheckCircleFill, XCircleFill } from "react-bootstrap-icons";
+import {
+  CheckCircleFill,
+  Clipboard2Check,
+  ClipboardX,
+  XCircleFill,
+} from "react-bootstrap-icons";
 import {
   getLanguageById,
   getLanguages,
   getUserScoreByQuizId,
   useAxiosLoader,
 } from "../../api";
+import { Link } from "react-router-dom";
 
 export const LanguageLevel = () => {
   const [loading] = useAxiosLoader();
@@ -120,7 +126,7 @@ export const LanguageLevel = () => {
   };
   return (
     <Tab.Container defaultActiveKey={selectedLang}>
-      <Nav variant="pills">
+      <Nav variant="underline">
         {languages.map((lang) => (
           <Nav.Item key={`btn-lang${lang.id}`} className="p-1">
             <Nav.Link
@@ -138,11 +144,12 @@ export const LanguageLevel = () => {
             <Table responsive>
               <thead>
                 <tr>
-                  <th>Quiz Name</th>
+                  <th width="30%">Quiz Name</th>
                   <th>Difficulty Level</th>
                   <th className="text-center">Score</th>
                   <th className="text-center">Max Score</th>
                   <th className="text-center">Certified</th>
+                  <th className="text-center">Retake Test</th>
                 </tr>
               </thead>
               <tbody>
@@ -183,10 +190,30 @@ export const LanguageLevel = () => {
                         </>
                       )}
                     </td>
+                    <td className="text-center">
+                      {renderData(
+                        <>
+                          {quiz.status === "ATTEMPTED" &&
+                          quiz.maxScore > 0 &&
+                          quiz.score / quiz.maxScore > 0.5 ? (
+                            <ClipboardX
+                              className="text-tertiary"
+                              style={{ cursor: "not-allowed", opacity: 0.5 }}
+                            />
+                          ) : (
+                            <Link
+                              to={`/languages/${selectedLang}/quizzes/${quiz.id}`}
+                            >
+                              <Clipboard2Check />
+                            </Link>
+                          )}
+                        </>
+                      )}
+                    </td>
                   </tr>
                 ))}
                 <tr>
-                  <td className="text-end" colSpan={5}>
+                  <td className="text-end" colSpan={6}>
                     {renderData(
                       <>
                         Your language level:
