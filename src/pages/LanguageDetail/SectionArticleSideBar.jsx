@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Accordion, Col, Nav, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { getLanguageById } from "../../api";
+import { getLanguageById, saveArticleVisit } from "../../api";
 import toast from "react-hot-toast";
 export const SectionArticleSideBar = () => {
   const params = useParams();
@@ -59,7 +59,9 @@ export const SectionArticleSideBar = () => {
                             to={`/languages/${params.languageId}/articles/${article.id}`}
                             className={`d-flex mb-2 ${
                               selected == article.id ? "active" : ""
-                            }`}
+                            }`} onClick={() => {
+                              saveArticleVisit(article.id);
+                            }}
                           >
                             {article.name}
                           </Link>
