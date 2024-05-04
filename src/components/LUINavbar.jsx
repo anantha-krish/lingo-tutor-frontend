@@ -4,12 +4,13 @@ import LingoBrand from "../assets/images/logo_transparent.png";
 import { getUsername } from "../sessionManager";
 
 // Dev only (Delete later)
+/*
 const devMenu = [
   { text: " Quiz (Dev)", link: "languages/2001/quizzes/7002" },
   { text: " Quiz  Result (Dev)", link: "/results/quizzes/7001" },
   { text: "Lang Detail (Dev)", link: "/languages/1001" },
   { text: "Page Not Found (Dev)", link: "/dummy" },
-];
+];*/
 const menuItems = [
   {
     text: "Home",
@@ -19,7 +20,7 @@ const menuItems = [
     text: "Dashboard",
     link: "/dashboard",
   },
-  ...devMenu,
+  // ...devMenu,
 ];
 
 export const LUINavbar = () => {
