@@ -37,7 +37,9 @@ html {
 .card_radio_btn .form-check-input {
   display: none;
 }
-
+.card_radio_btn .form-check-input + label {
+  width: 100%;
+}
 .card.selected {
   box-shadow: 0 0 8px 2px #2ecc71;
 }

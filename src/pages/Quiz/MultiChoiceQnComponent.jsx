@@ -39,12 +39,12 @@ export const MultiChoiceQnComponent = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.mcqId]);
   return (
-    <section>
-      <h2>{multiChoiceQn.question}</h2>
+    <section className="p-4">
+      <h4>{multiChoiceQn.question}</h4>
       <Row>
         {(multiChoiceQn.choices.length ?? 0) > 0 &&
           multiChoiceQn.choices.map((choice) => (
-            <Col key={choice.id}>
+            <Col lg={6} key={choice.id}>
               <Form.Check // prettier-ignore
                 type="radio"
                 name="choice"
@@ -54,7 +54,7 @@ export const MultiChoiceQnComponent = () => {
                 onClick={saveSelection}
                 label={
                   <Card
-                    style={{ width: "18rem", height: "8rem" }}
+                    style={{ height: "10rem", cursor: "pointer" }}
                     className={`m-4 card_radio ${
                       selected == choice.id ? "selected" : ""
                     }`}

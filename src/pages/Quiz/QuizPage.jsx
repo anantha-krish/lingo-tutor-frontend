@@ -94,7 +94,7 @@ export const QuizPage = () => {
               <Col>
                 {pageNum < mcqIds.length - 1 ? (
                   <Button
-                    className=" w-100"
+                    className="w-100"
                     onClick={() => navigatePage(pageNum + 1)}
                   >
                     Next
