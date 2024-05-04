@@ -3,7 +3,7 @@ import http from "../http";
 export function updateUserProfile(formObject) {
   var { firstName, lastName, email } = formObject;
 
-  return http.put("/user/profile", {
+  return http.patch("/user/profile", {
     firstName,
     lastName,
     email,
@@ -23,5 +23,11 @@ export function getUserVisitHistory(pageNum, pageSize) {
 }
 
 export function saveUserVisitHistory(articleId) {
-  return http.post(`/user/visits/articles/${articleId}`);
+  return http.put(`/user/visits/articles`, {
+    articleId,
+  });
+}
+
+export function deleteUserVisitHistory(articleId) {
+  return http.delete(`/user/visits/articles/${articleId}`);
 }

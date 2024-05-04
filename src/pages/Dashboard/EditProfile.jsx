@@ -83,6 +83,7 @@ export const EditProfileComponent = () => {
         toast.success(
           `User: ${res.data.userName} profile updated successfully`
         );
+        setIsReadMode(true);
       }
       // eslint-disable-next-line no-empty
     } catch (error) {}

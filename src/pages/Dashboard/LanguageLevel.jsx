@@ -1,21 +1,16 @@
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Nav, Placeholder, ProgressBar, Tab, Table } from "react-bootstrap";
+import { Nav, ProgressBar, Tab, Table } from "react-bootstrap";
 import {
   CheckCircleFill,
   Clipboard2Check,
   ClipboardX,
   XCircleFill,
 } from "react-bootstrap-icons";
-import {
-  getLanguageById,
-  getLanguages,
-  getUserScoreByQuizId,
-  useAxiosLoader,
-} from "../../api";
+import { getLanguageById, getLanguages, getUserScoreByQuizId } from "../../api";
 import { Link } from "react-router-dom";
+import { LazyCell } from "../../components";
 
 export const LanguageLevel = () => {
-  const [loading] = useAxiosLoader();
   const [languages, setLanguages] = useState([{ id: 0, name: "" }]);
   const [selectedLang, setSelectedLang] = useState(0);
   const [quizList, setQuizList] = useState([]);
@@ -82,7 +77,7 @@ export const LanguageLevel = () => {
       ];
     }
     setConsolidatedQuiz(consolidatedList);
-  }, [attemptedQuizList, quizList, loading]);
+  }, [attemptedQuizList, quizList]);
 
   useEffect(() => {
     if (consolidatedQuiz.length == 0) return;
@@ -112,8 +107,7 @@ export const LanguageLevel = () => {
     }
     setLevel(userLevel[level]);
   }, [consolidatedQuiz]);
-  const renderData = (data) =>
-    loading ? <Placeholder xs={12} bg="secondary" /> : data;
+
   const getBarColor = () => {
     if (percentage > 80) {
       return "success";
@@ -155,10 +149,12 @@ export const LanguageLevel = () => {
               <tbody>
                 {consolidatedQuiz.map((quiz) => (
                   <tr className="align-top" key={`row_${quiz.id}`}>
-                    <td>{renderData(quiz.name)}</td>
                     <td>
-                      {renderData(
-                        quiz.level && (
+                      <LazyCell>{quiz.name}</LazyCell>
+                    </td>
+                    <td>
+                      <LazyCell>
+                        {quiz.level && (
                           <span
                             className={`badge text-bg-${
                               quiz.level === "EASY" ? "success" : ""
@@ -172,64 +168,63 @@ export const LanguageLevel = () => {
                           >
                             {quiz.level.toLowerCase()}
                           </span>
-                        )
-                      )}
-                    </td>
-                    <td className="text-center">{renderData(quiz.score)}</td>
-                    <td className="text-center">{renderData(quiz.maxScore)}</td>
-                    <td className="text-center">
-                      {renderData(
-                        <>
-                          {quiz.status === "ATTEMPTED" &&
-                          quiz.maxScore > 0 &&
-                          quiz.score / quiz.maxScore > 0.5 ? (
-                            <CheckCircleFill className="text-success" />
-                          ) : (
-                            <XCircleFill className="text-danger" />
-                          )}
-                        </>
-                      )}
+                        )}
+                      </LazyCell>
                     </td>
                     <td className="text-center">
-                      {renderData(
-                        <>
-                          {quiz.status === "ATTEMPTED" &&
-                          quiz.maxScore > 0 &&
-                          quiz.score / quiz.maxScore > 0.5 ? (
-                            <ClipboardX
-                              className="text-tertiary"
-                              style={{ cursor: "not-allowed", opacity: 0.5 }}
-                            />
-                          ) : (
-                            <Link
-                              to={`/languages/${selectedLang}/quizzes/${quiz.id}`}
-                            >
-                              <Clipboard2Check />
-                            </Link>
-                          )}
-                        </>
-                      )}
+                      <LazyCell>{quiz.score}</LazyCell>
+                    </td>
+                    <td className="text-center">
+                      <LazyCell>{quiz.maxScore}</LazyCell>
+                    </td>
+                    <td className="text-center">
+                      <LazyCell>
+                        {quiz.status === "ATTEMPTED" &&
+                        quiz.maxScore > 0 &&
+                        quiz.score / quiz.maxScore > 0.5 ? (
+                          <CheckCircleFill className="text-success" />
+                        ) : (
+                          <XCircleFill className="text-danger" />
+                        )}
+                      </LazyCell>
+                    </td>
+                    <td className="text-center">
+                      <LazyCell>
+                        {quiz.status === "ATTEMPTED" &&
+                        quiz.maxScore > 0 &&
+                        quiz.score / quiz.maxScore > 0.5 ? (
+                          <ClipboardX
+                            className="text-tertiary"
+                            style={{ cursor: "not-allowed", opacity: 0.5 }}
+                          />
+                        ) : (
+                          <Link
+                            to={`/languages/${selectedLang}/quizzes/${quiz.id}`}
+                          >
+                            <Clipboard2Check />
+                          </Link>
+                        )}
+                      </LazyCell>
                     </td>
                   </tr>
                 ))}
                 <tr>
                   <td className="text-end" colSpan={6}>
-                    {renderData(
-                      <>
-                        Your language level:
-                        <strong> {renderData(level)}</strong>
-                        <br />
-                      </>
-                    )}
-
-                    {renderData(
+                    <LazyCell>
+                      Your language level:
+                      <strong>
+                        <LazyCell>{level}</LazyCell>
+                      </strong>
+                      <br />
+                    </LazyCell>
+                    <LazyCell>
                       <ProgressBar
                         now={percentage}
                         variant={getBarColor()}
                         min={0}
                         max={100}
                       />
-                    )}
+                    </LazyCell>
                   </td>
                 </tr>
               </tbody>

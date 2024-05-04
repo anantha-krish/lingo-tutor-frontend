@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import {
+  Button,
   Col,
   Dropdown,
   Image,
@@ -8,13 +9,20 @@ import {
   Row,
   Table,
 } from "react-bootstrap";
-import { Calendar, Clock } from "react-bootstrap-icons";
+import { Calendar, Clock, Trash } from "react-bootstrap-icons";
 import { useNavigate } from "react-router-dom";
-import { getArticleInfoById, getUserVisitHistory } from "../../api";
+import {
+  deleteUserVisitHistory,
+  getArticleInfoById,
+  getUserVisitHistory,
+} from "../../api";
+import { LazyCell } from "../../components";
+import toast from "react-hot-toast";
 
 export const RecentlyVisited = () => {
   var [historyList, setHistory] = useState([]);
   const [pageNum, setPageNum] = useState(0);
+  const [syncReqNum, setSyncReqNum] = useState(0);
   const [pageSize, setPageSize] = useState(5);
   useEffect(() => {
     const fetchUserVisitHistory = async () => {
@@ -24,8 +32,15 @@ export const RecentlyVisited = () => {
       }
     };
     fetchUserVisitHistory();
-  }, [pageNum, pageSize]);
-
+  }, [pageNum, pageSize, syncReqNum]);
+  const handleDelete = async (articleId, articleName) => {
+    var resp = await deleteUserVisitHistory(articleId);
+    if (resp.status === 204) {
+      toast.success(`${resp.status} Removed ${articleName} from visit history`);
+      refresh();
+    }
+  };
+  const refresh = () => setSyncReqNum(Math.random());
   return (
     <>
       <Row className="history-pagination">
@@ -42,7 +57,10 @@ export const RecentlyVisited = () => {
             </Dropdown.Menu>
           </Dropdown>
         </Col>
-        <Col className="p-1">Page {pageNum + 1}</Col>
+        <Col>
+          <Button onClick={refresh}>Refresh</Button>
+        </Col>
+
         <Col className="justify-end">
           <Pagination>
             {pageNum > 0 && (
@@ -50,6 +68,13 @@ export const RecentlyVisited = () => {
                 Prev
               </Pagination.Prev>
             )}
+          </Pagination>
+        </Col>
+        <Col className="p-1">
+          <strong>Page {pageNum + 1}</strong>
+        </Col>
+        <Col>
+          <Pagination>
             <Pagination.Next onClick={() => setPageNum(pageNum + 1)}>
               Next
             </Pagination.Next>
@@ -60,8 +85,9 @@ export const RecentlyVisited = () => {
         <thead>
           <tr>
             <th width="20%"></th>
-            <th width="40%"></th>
             <th width="30%"></th>
+            <th width="30%"></th>
+            <th width="10%"></th>
           </tr>
           <tr>
             <th colSpan={3}>Visit History </th>
@@ -72,6 +98,7 @@ export const RecentlyVisited = () => {
             historyList.map((history) => (
               <ArticleInfoItem
                 key={history.articleId}
+                handleDelete={handleDelete}
                 articleId={history.articleId}
                 timeStamp={history.timestamp}
               />
@@ -87,7 +114,7 @@ export const RecentlyVisited = () => {
   );
 };
 
-const ArticleInfoItem = ({ articleId, timeStamp }) => {
+const ArticleInfoItem = ({ articleId, timeStamp, handleDelete }) => {
   const [articleInfo, setArticleInfo] = useState({
     article: {
       id: 0,
@@ -101,72 +128,114 @@ const ArticleInfoItem = ({ articleId, timeStamp }) => {
       id: 0,
       name: "",
     },
+    active: false,
   });
-  const [isLoading, setIsLoading] = useState(true);
+
   const navigate = useNavigate();
   useEffect(() => {
     const fetchArticleInfo = async () => {
       var resp = await getArticleInfoById(articleId);
       if (resp.status === 200) {
         setArticleInfo(resp.data);
-        setIsLoading(false);
       }
     };
     fetchArticleInfo();
   }, [articleId]);
+
   const dateTime = timeStamp.split("T");
   const date = dateTime[0];
   const time = dateTime[1].split(".")[0];
-  return isLoading ? (
+  const isDeleted = articleInfo.article.id > 0 && !articleInfo.active;
+  return (
     <tr>
-      <td colSpan={3}>
-        <Placeholder />
-      </td>
-    </tr>
-  ) : (
-    <tr
-      style={{ cursor: "pointer" }}
-      onClick={() =>
-        navigate(
-          `/languages/${articleInfo.language.id}/articles/${articleInfo.article.id}`
-        )
-      }
-    >
-      <td>
-        {" "}
-        <div style={{ height: 50, width: 50 }}>
-          <Image
-            variant="top"
-            src={
-              new URL(
-                `../../assets/images/${articleInfo.language.id}.png`,
-                import.meta.url
-              ).href
-            }
-            style={{
-              height: "100%",
-              width: "100%",
-            }}
-          />
-        </div>
-        {articleInfo.language.name}
-      </td>
-      <td>
-        <strong className="text-body-secondary">
-          {articleInfo.section.name}
-        </strong>
-        <div>{articleInfo.article.name}</div>
-      </td>
+      {isDeleted ? (
+        <>
+          {" "}
+          <td>
+            <Placeholder
+              as={Image}
+              xs={12}
+              style={{ height: 50, width: 50 }}
+              bg="secondary"
+            ></Placeholder>
+          </td>
+          <td style={{ verticalAlign: "middle" }}>
+            <div className="text-body-tertiary">Deleted or moved</div>
+          </td>
+        </>
+      ) : (
+        <>
+          <td
+            {...(!isDeleted && {
+              style: { cursor: "pointer" },
+              onClick: () =>
+                navigate(
+                  `/languages/${articleInfo.language.id}/articles/${articleInfo.article.id}`
+                ),
+            })}
+          >
+            <LazyCell>
+              <div style={{ height: 50, width: 50 }}>
+                <Image
+                  variant="top"
+                  src={
+                    new URL(
+                      `../../assets/images/${articleInfo.language.id}.png`,
+                      import.meta.url
+                    ).href
+                  }
+                  style={{
+                    height: "100%",
+                    width: "100%",
+                  }}
+                />
+              </div>
+            </LazyCell>
+            <LazyCell>{articleInfo.language.name}</LazyCell>
+          </td>
+          <td
+            {...(!isDeleted && {
+              style: { cursor: "pointer" },
+              onClick: () =>
+                navigate(
+                  `/languages/${articleInfo.language.id}/articles/${articleInfo.article.id}`
+                ),
+            })}
+          >
+            <LazyCell>
+              <strong className="text-body-secondary">
+                {articleInfo.section.name}
+              </strong>
+            </LazyCell>
+            <div>
+              <LazyCell>{articleInfo.article.name}</LazyCell>
+            </div>
+          </td>
+        </>
+      )}
       <td>
         <div className="d-flex align-items-center">
           <Calendar className="m-1" />
-          {date}
+          <LazyCell>{date}</LazyCell>
         </div>
 
         <div className="d-flex align-items-center">
           <Clock className="m-1" />
-          {time}
+          <LazyCell>{time}</LazyCell>
         </div>
+      </td>
+      <td>
+        <LazyCell>
+          <Button
+            size="sm"
+            variant="outline-danger mt-2"
+            onClick={() =>
+              handleDelete(articleInfo.article.id, articleInfo.article.name)
+            }
+          >
+            <Trash />
+          </Button>
+        </LazyCell>
       </td>
     </tr>
   );
