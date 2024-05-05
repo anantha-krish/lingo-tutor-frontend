@@ -6,9 +6,9 @@ import { ArrowLeftCircle } from "react-bootstrap-icons";
 import ReactPlayer from "react-player/youtube";
 const RenderMedia = ({ mediaLink, mediaType }) => {
   if (mediaType == "image") {
-    return <Image src={mediaLink} />;
+    return <Image height="100%" width="100%" src={mediaLink} />;
   } else if (mediaType == "video") {
-    return <ReactPlayer url={mediaLink} />;
+    return <ReactPlayer height={300} url={mediaLink} />;
   }
   return <></>;
 };
@@ -37,26 +37,29 @@ export const ArticleDetailComponent = () => {
           </Button>
         </Col>
       </Row>
-      <Row>
-        <section>
-          <h1>{article.title}</h1>
-          <article>
-            <p>{article.shortDescription}</p>
-            <Container>
+      {article && (
+        <Row>
+          <section>
+            <h1>{article.title}</h1>
+            <article>
+              <p>{article.shortDescription}</p>
+              <Container>
+                <Row>
+                  <Col style={{ maxHeight: 300 }}>
+                    <RenderMedia
+                      mediaLink={article.mediaLink}
+                      mediaType={article.mediaType}
+                    />
+                  </Col>
+                </Row>
+              </Container>
               <Row>
-                <Col>
-                  <RenderMedia
-                    mediaLink={article.mediaLink}
-                    mediaType={article.mediaType}
-                  />
-                </Col>
+                <p>{article.description}</p>
               </Row>
-            </Container>
-            <p>{article.mediaLink}</p>
-            <p>{article.description}</p>
-          </article>
-        </section>
-      </Row>
+            </article>
+          </section>
+        </Row>
+      )}
     </>
   );
 };
