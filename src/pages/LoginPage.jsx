@@ -34,7 +34,7 @@ export const LoginPage = () => {
       var res = await loginUser(values);
       if (res.status == 200) {
         toast.success(`User: ${values.username} logged in successfully`);
-        setToken(res.data);
+        setToken(res.data.token);
         setUsername(values.username);
         navigate("/");
       }

@@ -19,7 +19,7 @@ export function loginUser(formObject) {
   var { username, password } = formObject;
   // assuming only users can login from frontend
 
-  return http.post(`/auth/token`, {
+  return http.post(`/auth/login`, {
     username,
     password,
   });
