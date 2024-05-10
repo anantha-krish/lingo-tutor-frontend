@@ -1,4 +1,9 @@
 # Lingo Tutor Client
+## Demo Video Link
+
+1080p: https://drive.google.com/file/d/1h5kBud3UXMalPAtwr30qfGoaG0HC21sH/view
+
+720p: https://drive.google.com/file/d/1sS_Jgq6VfLGUop12L-_GEk2I2IWFWGIB/view
 
 ## Tech stack used
 React, Vite, SASS, React Router, Axios, Formik, Yup, Bootstrap CSS &  Icons, React Hot Toast, React Spinners, React Player
