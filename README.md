@@ -5,6 +5,8 @@
 
 720p: https://drive.google.com/file/d/1sS_Jgq6VfLGUop12L-_GEk2I2IWFWGIB/view
 
+#### For Lingo Tutor Server Setup refer: https://github.com/anantha-krish/lingo-tutor-backend
+
 ## Tech stack used
 React, Vite, SASS, React Router, Axios, Formik, Yup, Bootstrap CSS &  Icons, React Hot Toast, React Spinners, React Player
 <div/>
@@ -14,9 +16,6 @@ React, Vite, SASS, React Router, Axios, Formik, Yup, Bootstrap CSS &  Icons, Rea
 <img width="150" src="https://github.com/anantha-krish/lingo-tutor-frontend/assets/22259160/a778b867-957a-4297-aa3f-147a668bc55b"/>
 <img width="150" src="https://github.com/anantha-krish/lingo-tutor-frontend/assets/22259160/e30894fc-42db-423c-b0ad-976215e65534"/>
 
-
-
-### For Lingo Tutor Server Setup refer: https://github.com/anantha-krish/lingo-tutor-backend
 
 ### How to run the project?
 
